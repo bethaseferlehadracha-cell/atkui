@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>שאלון אפיון עיסוק הדרכתי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#103958;
+  --brand-700:#0c2c44;
+  --brand-500:#1b5480;
+  --brand-300:#4a7fa8;
+  --brand-100:#dce7f0;
+  --brand-050:#f2f6fa;
+  --ink:#1d2b36;
+  --ink-soft:#54636f;
+  --ink-mute:#8494a0;
+  --line:#e2e8ee;
+  --line-soft:#eef2f6;
+  --bg:#f6f8fa;
+  --card:#ffffff;
+  --ok:#2f6f57;
+  --warn:#8a6d3b;
+  --danger:#8c3a3a;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(16,57,88,.05), 0 8px 28px rgba(16,57,88,.07);
+  --shadow-sm:0 1px 2px rgba(16,57,88,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:'Assistant', 'Segoe UI', Arial, sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+input,select{font-family:inherit;font-size:inherit;color:inherit}
+.hidden{display:none !important}
+
+/* ---------- shell ---------- */
+.topbar{
+  background:var(--brand);
+  color:#fff;
+  padding:18px 24px;
+  display:flex;align-items:center;gap:14px;
+  box-shadow:0 1px 0 rgba(255,255,255,.06) inset;
+}
+.topbar .mark{
+  width:38px;height:38px;border-radius:9px;
+  background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:13px;letter-spacing:.5px;
+  border:1px solid rgba(255,255,255,.18);
+}
+.topbar h1{font-size:17px;font-weight:600;letter-spacing:.2px}
+.topbar .sub{font-size:13px;font-weight:300;opacity:.75;margin-top:-2px}
+.wrap{max-width:760px;margin:0 auto;padding:40px 20px 64px}
+.wrap.wide{max-width:1240px}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:38px 40px;
+}
+@media(max-width:640px){
+  .wrap{padding:24px 14px 48px}
+  .card{padding:26px 20px;border-radius:12px}
+}
+
+/* ---------- typography ---------- */
+h2.title{font-size:24px;font-weight:600;color:var(--brand);letter-spacing:-.2px}
+p.lead{color:var(--ink-soft);margin-top:10px;font-size:15.5px}
+.rule{height:1px;background:var(--line-soft);margin:26px 0}
+.eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.8px;color:var(--brand-300);text-transform:none}
+
+/* ---------- form ---------- */
+.field{margin-top:22px}
+.field label{display:block;font-size:14.5px;font-weight:600;color:var(--ink);margin-bottom:7px}
+.field .req{color:var(--brand-300);font-weight:400}
+.field input{
+  width:100%;padding:12px 14px;
+  border:1px solid var(--line);border-radius:10px;
+  background:#fff;transition:border-color .15s, box-shadow .15s;
+}
+.field input::placeholder{color:var(--ink-mute);font-weight:300}
+.field input:focus{outline:none;border-color:var(--brand-300);box-shadow:0 0 0 3px rgba(74,127,168,.15)}
+.field input.invalid{border-color:#c2777a;box-shadow:0 0 0 3px rgba(194,119,122,.13)}
+.err{color:var(--danger);font-size:13.5px;margin-top:6px;display:none}
+.err.show{display:block}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 26px;border-radius:10px;border:1px solid transparent;
+  font-weight:600;font-size:15.5px;transition:background .15s,border-color .15s,color .15s,opacity .15s;
+}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary:hover{background:var(--brand-700)}
+.btn-primary:disabled{background:#c3ced7;color:#fff;cursor:not-allowed}
+.btn-ghost{background:#fff;color:var(--brand);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--brand-300);background:var(--brand-050)}
+.btn-quiet{background:transparent;color:var(--ink-soft);border-color:transparent;padding:10px 12px;font-weight:500}
+.btn-quiet:hover{color:var(--brand)}
+.btn-sm{padding:8px 16px;font-size:14px;border-radius:8px}
+.btn-block{width:100%}
+
+/* ---------- progress ---------- */
+.q-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+.q-count{font-size:14px;font-weight:600;color:var(--brand-300)}
+.q-pct{font-size:13px;color:var(--ink-mute)}
+.bar{height:5px;background:var(--line-soft);border-radius:999px;margin-top:12px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--brand);border-radius:999px;transition:width .3s ease}
+.q-text{font-size:21px;font-weight:600;line-height:1.55;color:var(--ink);margin:30px 0 8px}
+@media(max-width:640px){.q-text{font-size:18.5px}}
+
+/* ---------- scale ---------- */
+.scale{margin-top:22px;display:flex;flex-direction:column;gap:9px}
+.opt{
+  display:flex;align-items:center;gap:13px;
+  padding:13px 16px;border:1px solid var(--line);border-radius:11px;
+  background:#fff;cursor:pointer;transition:border-color .12s,background .12s,box-shadow .12s;
+}
+.opt:hover{border-color:var(--brand-300);background:var(--brand-050)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.dot{
+  width:20px;height:20px;border-radius:50%;border:1.5px solid #c3ced7;
+  flex:0 0 auto;position:relative;transition:border-color .12s;
+}
+.opt.sel{border-color:var(--brand);background:var(--brand-050);box-shadow:0 0 0 1px var(--brand) inset}
+.opt.sel .dot{border-color:var(--brand)}
+.opt.sel .dot::after{
+  content:'';position:absolute;inset:4px;border-radius:50%;background:var(--brand);
+}
+.opt .num{
+  font-weight:700;color:var(--brand);min-width:16px;text-align:center;font-size:15px;
+}
+.opt .lbl{color:var(--ink);font-size:15.5px}
+.opt.sel .lbl{font-weight:600}
+.nav{display:flex;justify-content:flex-start;align-items:center;gap:10px;margin-top:30px}
+
+/* ---------- done ---------- */
+.done{text-align:center;padding:56px 40px}
+.done .ring{
+  width:74px;height:74px;border-radius:50%;margin:0 auto 22px;
+  background:var(--brand-050);border:1px solid var(--brand-100);
+  display:flex;align-items:center;justify-content:center;
+}
+.done .ring svg{width:34px;height:34px;stroke:var(--brand);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.done h2{font-size:23px;font-weight:600;color:var(--brand)}
+.done p{color:var(--ink-soft);margin-top:10px}
+.done .note{margin-top:8px;font-size:14px;color:var(--ink-mute)}
+
+/* ---------- footer ---------- */
+.foot{margin-top:26px;text-align:center;font-size:13px;color:var(--ink-mute)}
+.foot a{color:var(--ink-mute);text-decoration:none;border-bottom:1px dotted var(--line)}
+.foot a:hover{color:var(--brand)}
+
+/* ---------- admin ---------- */
+.admin-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;
+}
+.admin-bar h2{font-size:21px;font-weight:600;color:var(--brand)}
+.toolbar{
+  display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;
+  padding:18px 20px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);margin-bottom:16px;
+}
+.tool{display:flex;flex-direction:column;gap:6px}
+.tool label{font-size:12.5px;font-weight:600;color:var(--ink-soft)}
+.tool input,.tool select{
+  padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;min-width:190px;
+}
+.tool input:focus,.tool select:focus{outline:none;border-color:var(--brand-300);box-shadow:0 0 0 3px rgba(74,127,168,.13)}
+.tool.grow{flex:1 1 200px}
+.tool.grow input{width:100%}
+.spacer{flex:1 1 auto}
+.tbl-wrap{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+thead th{
+  background:var(--brand-050);color:var(--brand);font-weight:600;font-size:13.5px;
+  text-align:right;padding:13px 16px;border-bottom:1px solid var(--line);white-space:nowrap;
+}
+tbody td{padding:13px 16px;border-bottom:1px solid var(--line-soft);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--brand-050)}
+.tag{
+  display:inline-block;padding:3px 11px;border-radius:999px;font-size:13px;font-weight:600;
+  border:1px solid var(--brand-100);background:var(--brand-050);color:var(--brand)}
+.tag.alt{border-color:#d7e3d9;background:#f1f7f3;color:var(--ok)}
+.empty{padding:46px 20px;text-align:center;color:var(--ink-mute)}
+.count-note{font-size:13.5px;color:var(--ink-mute);margin:10px 2px 0}
+
+/* ---------- modal ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(16,57,88,.42);backdrop-filter:blur(2px);
+  display:flex;align-items:flex-start;justify-content:center;padding:30px 16px;overflow:auto;z-index:50;
+}
+.modal{
+  background:#fff;border-radius:var(--radius);max-width:860px;width:100%;
+  box-shadow:0 18px 60px rgba(16,57,88,.25);border:1px solid var(--line);
+}
+.modal-head{
+  padding:22px 26px;border-bottom:1px solid var(--line-soft);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+}
+.modal-head h3{font-size:19px;font-weight:600;color:var(--brand)}
+.modal-head .meta{font-size:13.5px;color:var(--ink-soft);margin-top:3px}
+.x{background:none;border:none;font-size:24px;line-height:1;color:var(--ink-mute);padding:2px 6px}
+.x:hover{color:var(--brand)}
+.modal-body{padding:22px 26px 28px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat{border:1px solid var(--line);border-radius:11px;padding:14px 16px;background:var(--brand-050)}
+.stat .k{font-size:12.5px;color:var(--ink-soft);font-weight:600}
+.stat .v{font-size:21px;font-weight:700;color:var(--brand);margin-top:2px}
+.stat .v.small{font-size:16px}
+.ans-list{margin-top:8px;border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.ans{display:flex;gap:14px;padding:11px 15px;border-bottom:1px solid var(--line-soft);font-size:14.5px}
+.ans:last-child{border-bottom:none}
+.ans:nth-child(odd){background:#fbfcfd}
+.ans .idx{color:var(--ink-mute);min-width:26px;font-weight:600}
+.ans .txt{flex:1}
+.ans .val{font-weight:600;color:var(--brand);white-space:nowrap}
+.sec-h{font-size:14px;font-weight:600;color:var(--ink-soft);margin:24px 0 10px}
+
+/* ---------- login ---------- */
+.login{max-width:430px;margin:0 auto}
+.hint{font-size:13px;color:var(--ink-mute)}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;
+  font-size:13px;font-weight:600;border:1px solid var(--line);background:#fff;color:var(--ink-soft)}
+.chip .led{width:8px;height:8px;border-radius:50%;background:var(--ink-mute);flex:0 0 auto}
+.chip.cloud{border-color:#d7e3d9;background:#f1f7f3;color:var(--ok)}
+.chip.cloud .led{background:var(--ok)}
+.chip.local{border-color:#e6ded0;background:#faf6ef;color:var(--warn)}
+.chip.local .led{background:var(--warn)}
+@media(max-width:640px){.hint{display:none}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<!-- =====================================================================
+     שכבת Firebase (Cloud Firestore)
+     גשר קטן בין מודול ה-SDK (ES6) לבין קוד האפליקציה הקלאסי שמתחתיו.
+     הסקריפט הזה רץ ראשון ויוצר את ההבטחה שהאפליקציה ממתינה לה.
+     ===================================================================== -->
+<script>
+window.__fbResolve = null;
+window.__fbReady = new Promise(function(res){ window.__fbResolve = res; });
+window.__fbSettle = function(store){
+  if (window.FirebaseStore) return;
+  window.FirebaseStore = store;
+  if (window.__fbResolve) window.__fbResolve(store);
+};
+/* אם ה-SDK אינו נטען (אין רשת, חסימה, קובץ מקומי) — ממשיכים במצב מקומי בלבד */
+setTimeout(function(){
+  window.__fbSettle({ enabled:false, reason:'טעינת ה-SDK של Firebase נכשלה' });
+}, 8000);
+</script>
+
+<script type="module" onerror="window.__fbSettle({ enabled:false, reason:'טעינת ה-SDK של Firebase נכשלה' })">
+/* ---------------------------------------------------------------------
+   Firebase Web SDK v12 — מודולרי (ES6), נטען ישירות מה-CDN של Google.
+   --------------------------------------------------------------------- */
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
+import {
+  getFirestore, collection, doc, setDoc, getDocs, deleteDoc,
+  query, orderBy, serverTimestamp
+} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js';
+import {
+  getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js';
+
+/* =====================================================================
+   כאן מזינים את מפתחות הפרויקט מ-Firebase Console:
+   Project settings ← General ← Your apps ← Web app ← SDK setup and configuration
+   כל עוד השדות ריקים, האפליקציה עובדת באחסון מקומי בלבד.
+   ===================================================================== */
+const firebaseConfig = {
+  apiKey:            'AIzaSyAHKaOy2EzSNbDGCFnITNLGc7Z7iETMRxc',
+  authDomain:        'atkui-b377b.firebaseapp.com',
+  projectId:         'atkui-b377b',
+  storageBucket:     'atkui-b377b.firebasestorage.app',
+  messagingSenderId: '126898792906',
+  appId:             '1:126898792906:web:acfd8181c4c4d909b1c733',
+  measurementId:     'G-XL1FR7BF99'
+};
+
+/* שם האוסף (Collection) שבו נשמרות תשובות השאלון */
+const COLLECTION = 'questionnaireResponses';
+
+/* האם הכניסה לאזור המנהל תתבצע מול Firebase Authentication.
+   true  — כניסה באימייל וסיסמה של משתמש Firebase (מומלץ: מאפשר חוקי אבטחה הדוקים)
+   false — כניסה בסיסמה המקומית שמוגדרת ב-CONFIG.adminHash                      */
+const USE_FIREBASE_AUTH = false;
+
+if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
+  window.__fbSettle({ enabled:false, reason:'לא הוזנו מפתחות Firebase' });
+} else {
+  try {
+    const app  = initializeApp(firebaseConfig);
+    const db   = getFirestore(app);
+    const auth = getAuth(app);
+    const col  = collection(db, COLLECTION);
+
+    let user = null;
+    onAuthStateChanged(auth, function(u){ user = u; });
+
+    window.__fbSettle({
+      enabled: true,
+      useAuth: USE_FIREBASE_AUTH,
+      collection: COLLECTION,
+      projectId: firebaseConfig.projectId,
+
+      /* שמירת משיב יחיד. מזהה המסמך זהה למזהה המקומי — כך השמירה
+         אידמפוטנטית וניתן לסנכרן שוב רשומה שכשלה בלי ליצור כפילות. */
+      save: function(rec){
+        return setDoc(doc(db, COLLECTION, rec.id), {
+          id:          rec.id,
+          name:        rec.name,
+          unit:        rec.unit,
+          startedAt:   rec.startedAt,
+          submittedAt: rec.submittedAt,
+          answers:     rec.answers,
+          createdAt:   serverTimestamp()
+        });
+      },
+
+      /* שליפת כל המשיבים מהענן */
+      fetchAll: function(){
+        return getDocs(query(col, orderBy('submittedAt', 'desc'))).then(function(snap){
+          const out = [];
+          snap.forEach(function(d){
+            const v = d.data();
+            if (v && Array.isArray(v.answers)) {
+              out.push({
+                id:          v.id || d.id,
+                name:        v.name || '',
+                unit:        v.unit || '',
+                startedAt:   v.startedAt || null,
+                submittedAt: v.submittedAt || null,
+                answers:     v.answers,
+                synced:      true
+              });
+            }
+          });
+          return out;
+        });
+      },
+
+      remove: function(id){ return deleteDoc(doc(db, COLLECTION, id)); },
+
+      signIn:  function(email, pw){ return signInWithEmailAndPassword(auth, email, pw); },
+      signOut: function(){ return signOut(auth); },
+      user:    function(){ return user; }
+    });
+  } catch (e) {
+    window.__fbSettle({ enabled:false, reason:'אתחול Firebase נכשל: ' + e.message });
+  }
+}
+</script>
+
+<script>
+'use strict';
+/* =====================================================================
+   שאלון אפיון עיסוק הדרכתי  —  קה״ד / קצין צפ״ה
+   אפליקציה חד-קובצית. הנתונים נשמרים מקומית (localStorage) בדפדפן,
+   עם אפשרות שליחה מקבילה לנקודת קצה חיצונית (webhook) אם הוגדרה.
+   ===================================================================== */
+
+/* ---------- הגדרות ---------- */
+var CONFIG = {
+  /* סיסמת ברירת המחדל: hadracha2026
+     להחלפה: חשבו SHA-256 לסיסמה החדשה והדביקו כאן את התוצאה. */
+  adminHash: '7f49d24bb9757abc23a0a5ee5b26b872ad102d8868e3aaa0d09e424ceb5a6ece',
+  storeKey: 'hadracha.survey.v1',
+  /* אופציונלי: כתובת POST שאליה יישלח כל משיב (למשל Google Apps Script).
+     השאירו ריק כדי לעבוד מול אחסון מקומי בלבד. */
+  webhookUrl: '',
+  /* הסיווג תמיד חד-משמעי: קה״ד או קצין צפה, ללא תוצאת ביניים.
+     הסף הזה משמש אך ורק לתיוג רמת הביטחון של ההכרעה. */
+  lowConfidenceGap: 8
+};
+
+/* ---------- 36 השאלות (נוסח מקורי, ללא שינוי) ---------- */
+var QUESTIONS = [
+  'באיזו מידה את/ה עוסק/ת בבחינת איכות ההדרכה ביחידה?',
+  'באיזו מידה את/ה עוסק/ת בבקרת תהליכי ההדרכה ביחידה ?',
+  'באיזו מידה את/ה עוסק/ת בבניית תכנית העבודה ההדרכתית השנתית של היחידה?',
+  'באיזו מידה את/ה עוסק/ת בעדכון ובקרה של תכנית העבודה ההדרכתית השנתית של היחידה?',
+  'באיזו מידה את/ה עוסק/ת בתיקוף ואישור של חומרי הדרכה, מבחנים או אמצעי הערכה?',
+  'באיזו מידה את/ה אחראי/ת על איתור צורכי הדרכה והכנסתם לתכנית העבודה היחידתית?',
+  'באיזו מידה את/ה עוסק/ת בביצוע ביקורות מקצועיות על ההדרכה בפועל?',
+  'באיזו מידה את/ה עוסק/ת במעקב אחר יישום תכנית ההדרכה ובבקרה על עמידה ביעדים שנקבעו?',
+  'באיזו מידה את/ה עוסק/ת במעקב אחר ביצוע בפועל של תיק היסוד?',
+  'באיזו מידה את/ה עוסק/ת בעדכונו ותיקופו של תיק היסוד ?',
+  'באיזו מידה את/ה מהווה גורם מקצועי לבחינת איכות ההדרכה ולמתן משוב על אופן מימושה?',
+  'באיזו מידה את/ה עוסק/ת בתיאום בין הגורמים השונים המעורבים בתהליך ההכשרה ביחידה?',
+  'באיזו מידה את/ה עוסק/ת בבחינה ובשיפור של תכני הדרכה (שיעורים)?',
+  'באיזו מידה את/ה עוסק/ת בבנייה של תכני הדרכה (שיעורים)?',
+  'באיזו מידה את/ה עוסק/ת בתיקוף ובקרה על תכני הדרכה (שיעורים)?',
+  'באיזו מידה את/ה אחראי/ת על המעקב אחר מערך החניכה והליווי של הסגל?',
+  'באיזו מידה את/ה עוסק/ת בבדיקת התאמת ההדרכה לנהלים, לתפיסות ולסטנדרטים המקצועיים שנקבעו?',
+  'באיזו מידה את/ה עוסק/ת בתכנון ובתיאום של מחזורי הכשרה, משימות הדרכה ומשאבים הנדרשים לביצועם?',
+  'באיזו מידה את/ה עוסק/ת בהערכת תהליכי הדרכה באמצעות ביקורים, תצפיות, נתונים או אמצעים מקצועיים אחרים?',
+  'באיזו מידה את/ה עוסק/ת באישור או תיקוף של תכניות הדרכה, תיקי מדריך או תוצרים מקצועיים של ההכשרה?',
+  'באיזו מידה את/ה עוסק/ת באיתור פערים בהדרכה ובהובלת פעולות לשיפור המענה ההדרכתי?',
+  'באיזו מידה את/ה עוסק/ת בניהול ובבקרה של המשאבים הנדרשים לקיום ההכשרה, כגון אמצעי הדרכה, ציוד ותשתיות?',
+  'באיזו מידה את/ה עוסק/ת בשיתוף פעולה עם גורמים מקצועיים לצורך התאמת תהליכי ההדרכה לצרכים בשטח?',
+  'באיזו מידה את/ה עוסק/ת במעקב אחר יישום ממצאי ביקורות והפקת לקחים מתהליכי ההדרכה?',
+  'באיזו מידה את/ה משמש/ת כתובת מקצועית להתייעצות בנושאי הדרכה, תכנון הכשרה ותהליכי למידה?',
+  'באיזו מידה את/ה עוסק/ת בניהול המידע ההדרכתי ובשמירה על עדכניות התכנים והחומרים במערכות הדיגיטליות?',
+  'באיזו מידה את/ה בונה ומנהל/ת תכנית חניכה מסודרת ומתועדת לסגל המפקדים?',
+  'באיזו מידה את/ה מבצע/ת חניכה על חניכה –  צפייה באופן שבו מפקד חונך את פקודיו, מתן משוב והכוונה לשיפור?',
+  'באיזו מידה את/ה עוקב/ת אחר הכשרת וכשירות הסגל (כשיר להכשיר) בהכשרה?',
+  'באיזו מידה את/ה בונה ומתאם/ת את תכנית הכנת הסגל לקראת ההכשרה, כולל כלל המופעים והגורמים הנדרשים?',
+  'באיזו מידה את/ה בונה ומשבצ/ת את ציר ההדרכה בתוך ההכנס ועוקב/ת אחר ביצועו?',
+  'באיזו מידה את/ה מנהל/ת ומעדכן/ת את גרף ההכשרות, הלוזים והגאנט ההדרכתי של היחידה?',
+  'באיזו מידה את/ה מנהל/ת את שעון ההדרכה היחידתי ועוקב/ת אחר הפער בין התכנון לביצוע?',
+  'באיזו מידה את/ה מנהל/ת את סביבת הקמפוס הדיגיטלית של היחידה או ההכשרה?',
+  'באיזו מידה את/ה אחראי/ת על ניהול ועדכון אתר היחידה כמקור ידע ?',
+  'באיזו מידה את/ה מרכז/ת, מתעד/ת ומנגיש/ה תכנים מקצועיים, תוצרי הדרכה והפק״ל מההכשרות לשימוש שוטף של הסגל?'
+];
+
+/* ---------- מטריצת המשקלים ----------
+   כל שורה: [משקל קה״ד, משקל קצין צפ״ה] לשאלה המקבילה.
+   המשקלים נגזרים ישירות משתי הגדרות התפקיד:
+   • קה״ד  – ניהול ההדרכה: תכנון, תיאום, סנכרון, לוזים וגאנט, שעון הדרכה,
+             משאבים ועזרי הדרכה, הכנת סגלים, מערך חניכה, ניהול ושימור ידע.
+   • צפ״ה  – פיתוח ההדרכה: איכות, בקרה, תיקוף ואישור, ביקורות והערכה,
+             בניית ושיפור תכני הדרכה ומבחנים, יסודות מנצחים, חניכה על חניכה.
+   0 = ללא זיקה, 1 = זיקה משנית, 2 = זיקה בינונית, 3 = זיקה מובהקת.       */
+var WEIGHTS = [
+  [0,3],[1,3],[3,1],[3,2],[1,3],[1,3],[0,3],[2,2],[3,1],[1,3],
+  [0,3],[3,1],[1,3],[1,3],[0,3],[3,1],[0,3],[3,0],[0,3],[1,3],
+  [1,3],[3,0],[1,2],[1,3],[1,2],[2,2],[3,1],[1,3],[1,3],[3,1],
+  [3,1],[3,0],[3,1],[2,2],[3,1],[2,1]
+];
+
+var SCALE = [
+  {v:1, l:'כלל לא'},
+  {v:2, l:'במידה מועטה'},
+  {v:3, l:'במידה בינונית'},
+  {v:4, l:'במידה רבה'},
+  {v:5, l:'במידה רבה מאוד'}
+];
+
+var ROLE_KAHAD = 'קה״ד';
+var ROLE_TZAFA = 'קצין צפה';
+
+/* ---------- עזרי תשתית ---------- */
+function el(id){ return document.getElementById(id); }
+function esc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function pad(n){ return n < 10 ? '0'+n : ''+n; }
+function fmtDate(iso){
+  var d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();
+}
+function fmtDateTime(iso){
+  var d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  return fmtDate(iso)+' '+pad(d.getHours())+':'+pad(d.getMinutes());
+}
+function sha256(text){
+  var buf = new TextEncoder().encode(text);
+  return crypto.subtle.digest('SHA-256', buf).then(function(hash){
+    return Array.prototype.map.call(new Uint8Array(hash), function(b){
+      return ('00'+b.toString(16)).slice(-2);
+    }).join('');
+  });
+}
+
+/* ---------- אחסון ---------- */
+var Store = {
+  all: function(){
+    try {
+      var raw = localStorage.getItem(CONFIG.storeKey);
+      var arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch(e){ return []; }
+  },
+  save: function(list){
+    try { localStorage.setItem(CONFIG.storeKey, JSON.stringify(list)); return true; }
+    catch(e){ return false; }
+  },
+  add: function(rec){
+    var list = this.all();
+    list.push(rec);
+    return this.save(list);
+  },
+  remove: function(id){
+    this.save(this.all().filter(function(r){ return r.id !== id; }));
+  },
+  clear: function(){ this.save([]); },
+  /* סימון רשומה כמסונכרנת מול הענן */
+  markSynced: function(id){
+    var list = this.all(), i;
+    for (i=0; i<list.length; i++){ if (list[i].id === id) list[i].synced = true; }
+    this.save(list);
+  },
+  /* מיזוג רשומות מהענן לאחסון המקומי, ללא כפילויות */
+  merge: function(incoming){
+    var list = this.all(), seen = {}, added = 0;
+    list.forEach(function(r){ seen[r.id] = true; });
+    incoming.forEach(function(r){
+      if (r && r.id && !seen[r.id] && Array.isArray(r.answers)){
+        list.push(r); seen[r.id] = true; added++;
+      }
+    });
+    this.save(list);
+    return added;
+  },
+  pending: function(){
+    return this.all().filter(function(r){ return !r.synced; });
+  }
+};
+
+/* =====================================================================
+   שכבת הסנכרון מול Cloud Firestore
+   האחסון המקומי נשאר מקור האמת של הממשק, וה-Firestore הוא שכבת הענן
+   שמעליו. כך השאלון ממשיך לפעול במלואו גם ללא רשת או ללא Firebase,
+   וכל רשומה שלא נשלחה מסומנת וממתינה לסנכרון הבא.
+   ===================================================================== */
+var Cloud = {
+  store: function(){ return window.FirebaseStore || null; },
+  ready: function(){
+    return window.__fbReady || Promise.resolve({enabled:false});
+  },
+  enabled: function(){
+    var st = this.store();
+    return !!(st && st.enabled);
+  },
+  status: function(){
+    var st = this.store();
+    if (!st) return { state:'checking', text:'בודק חיבור לענן…' };
+    if (!st.enabled) return { state:'local', text:'מצב מקומי בלבד — ' + (st.reason || 'Firebase אינו מוגדר') };
+    return { state:'cloud', text:'מחובר ל-Firestore · ' + st.projectId };
+  },
+
+  /* שמירת משיב בענן. אינה חוסמת את המשיב: כישלון מותיר את הרשומה
+     מסומנת כלא-מסונכרנת, והיא תישלח בסנכרון הבא מאזור המנהל. */
+  push: function(rec){
+    return this.ready().then(function(st){
+      if (!st || !st.enabled) return false;
+      return st.save(rec).then(function(){
+        Store.markSynced(rec.id);
+        return true;
+      });
+    })['catch'](function(e){
+      if (window.console) console.warn('Firestore save failed:', e && e.message);
+      return false;
+    });
+  },
+
+  /* שליחה חוזרת של כל הרשומות שטרם הועלו */
+  flush: function(){
+    var pend = Store.pending();
+    if (!pend.length || !this.enabled()) return Promise.resolve(0);
+    var ok = 0;
+    return pend.reduce(function(chain, rec){
+      return chain.then(function(){
+        return Cloud.store().save(rec).then(function(){
+          Store.markSynced(rec.id); ok++;
+        })['catch'](function(){ /* נשארת ממתינה */ });
+      });
+    }, Promise.resolve()).then(function(){ return ok; });
+  },
+
+  /* משיכת כל המשיבים מהענן ומיזוגם לאחסון המקומי */
+  pull: function(){
+    if (!this.enabled()) return Promise.resolve(0);
+    return this.store().fetchAll().then(function(list){
+      return Store.merge(list);
+    })['catch'](function(e){
+      if (window.console) console.warn('Firestore fetch failed:', e && e.message);
+      return 0;
+    });
+  },
+
+  /* סנכרון דו-כיווני: קודם מעלים את הממתינות, אחר כך מושכים */
+  sync: function(){
+    var self = this;
+    return this.ready().then(function(){
+      return self.flush();
+    }).then(function(up){
+      return self.pull().then(function(down){ return {up:up, down:down}; });
+    });
+  },
+
+  remove: function(id){
+    if (!this.enabled()) return Promise.resolve(false);
+    return this.store().remove(id).then(function(){ return true; })['catch'](function(e){
+      if (window.console) console.warn('Firestore delete failed:', e && e.message);
+      return false;
+    });
+  }
+};
+
+function sendToWebhook(rec){
+  if (!CONFIG.webhookUrl) return;
+  try {
+    fetch(CONFIG.webhookUrl, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify(rec)
+    })['catch'](function(){ /* כשל רשת אינו חוסם את המשיב */ });
+  } catch(e){ /* מתעלמים */ }
+}
+
+/* ---------- מנגנון הניקוד ----------
+   ציון לכל פרופיל = הממוצע המשוקלל של התשובות, מנורמל ל-0..100.
+   כל תשובה מתורגמת ל-0..1 (1=0, 5=1) ומוכפלת במשקל השאלה לאותו פרופיל.
+   הנרמול לפי סכום המשקלים מבטיח שקילות בין שני הפרופילים
+   גם כאשר מספר השאלות הרלוונטיות לכל אחד מהם אינו זהה.
+
+   ההכרעה תמיד חד-משמעית — קה״ד או קצין צפה. כאשר שני הציונים זהים או
+   קרובים מאוד, מופעל שובר שוויון מדורג שנשען על השאלות המבחינות ביותר,
+   וגודל הפער מדווח כרמת ביטחון כדי שהמנהל יידע עד כמה ההכרעה מובהקת.  */
+
+/* ממוצע התשובות על תת-קבוצת שאלות הנבחרת לפי תנאי על זוג המשקלים */
+function meanWhere(answers, test){
+  var sum=0, n=0, i;
+  for (i=0; i<QUESTIONS.length; i++){
+    if (test(WEIGHTS[i][0], WEIGHTS[i][1])){ sum += Number(answers[i]); n++; }
+  }
+  return n ? sum/n : 0;
+}
+
+function scoreOf(answers){
+  var kNum=0, kDen=0, tNum=0, tDen=0, i, norm, w;
+  for (i=0; i<QUESTIONS.length; i++){
+    w = WEIGHTS[i];
+    norm = (Number(answers[i]) - 1) / 4;
+    kNum += w[0] * norm; kDen += w[0];
+    tNum += w[1] * norm; tDen += w[1];
+  }
+  var kahad = kDen ? (kNum/kDen)*100 : 0;
+  var tzafa = tDen ? (tNum/tDen)*100 : 0;
+  var gap = Math.abs(kahad - tzafa);
+  var result, confidence;
+
+  if (gap >= 0.05){
+    /* הכרעה רגילה לפי הציון הגבוה */
+    result = kahad > tzafa ? ROLE_KAHAD : ROLE_TZAFA;
+  } else {
+    /* שובר שוויון א': השאלות הבלעדיות — כאלה שמשקלן לפרופיל האחר הוא 0 */
+    var exK = meanWhere(answers, function(k,t){ return t === 0 && k > 0; });
+    var exT = meanWhere(answers, function(k,t){ return k === 0 && t > 0; });
+    if (Math.abs(exK - exT) >= 0.001){
+      result = exK > exT ? ROLE_KAHAD : ROLE_TZAFA;
+    } else {
+      /* שובר שוויון ב': השאלות המבחינות ביותר (הפרש משקלים של 2 ומעלה) */
+      var dK = meanWhere(answers, function(k,t){ return k - t >= 2; });
+      var dT = meanWhere(answers, function(k,t){ return t - k >= 2; });
+      if (Math.abs(dK - dT) >= 0.001){
+        result = dK > dT ? ROLE_KAHAD : ROLE_TZAFA;
+      } else {
+        /* פרופיל אחיד לחלוטין — הכרעה דטרמיניסטית לטובת קה״ד,
+           והמנהל מקבל התראה מפורשת ברמת הביטחון. */
+        result = ROLE_KAHAD;
+      }
+    }
+  }
+
+  if (gap >= 20)                            confidence = 'גבוהה';
+  else if (gap >= 13)                       confidence = 'בינונית';
+  else if (gap >= CONFIG.lowConfidenceGap)  confidence = 'נמוכה';
+  else if (gap >= 0.05)                     confidence = 'נמוכה מאוד — פער זניח';
+  else                                      confidence = 'נמוכה מאוד — הוכרע בשובר שוויון';
+
+  return {
+    kahad: Math.round(kahad*10)/10,
+    tzafa: Math.round(tzafa*10)/10,
+    gap: Math.round(gap*10)/10,
+    result: result,
+    confidence: confidence
+  };
+}
+
+/* ---------- מצב האפליקציה ---------- */
+var state = {
+  screen: 'intro',      /* intro | quiz | done | login | admin */
+  name: '',
+  unit: '',
+  idx: 0,
+  answers: new Array(QUESTIONS.length).fill(null),
+  startedAt: null,
+  admin: false
+};
+
+var APP = el('app');
+
+function topbar(subtitle){
+  return '<header class="topbar">' +
+    '<div class="mark">בס״ה</div>' +
+    '<div><h1>שאלון אפיון עיסוק הדרכתי</h1>' +
+    '<div class="sub">' + esc(subtitle) + '</div></div>' +
+  '</header>';
+}
+
+/* ===================== מסך פתיחה / פרטי המשיב ===================== */
+function renderIntro(){
+  APP.innerHTML = topbar('בית הספר להדרכה') +
+  '<div class="wrap"><div class="card">' +
+    '<div class="eyebrow">פרטי המשיב/ה</div>' +
+    '<h2 class="title" style="margin-top:6px">לפני שמתחילים</h2>' +
+    '<p class="lead">השאלון כולל ' + QUESTIONS.length + ' שאלות קצרות על אופן העבודה שלך בפועל. ' +
+      'לכל שאלה יש לבחור את המידה שבה הפעילות מאפיינת את עיסוקך. אין תשובות נכונות או שגויות.</p>' +
+    '<div class="rule"></div>' +
+    '<div class="field">' +
+      '<label for="f-name">שם מלא <span class="req">(חובה)</span></label>' +
+      '<input id="f-name" type="text" autocomplete="name" placeholder="שם פרטי ושם משפחה">' +
+    '</div>' +
+    '<div class="field">' +
+      '<label for="f-unit">יחידה <span class="req">(חובה)</span></label>' +
+      '<input id="f-unit" type="text" autocomplete="organization" placeholder="שם היחידה">' +
+    '</div>' +
+    '<div class="err" id="f-err">יש למלא שם מלא ויחידה כדי להתחיל.</div>' +
+    '<div style="margin-top:26px"><button class="btn btn-primary btn-block" id="f-go">התחלת השאלון</button></div>' +
+  '</div>' +
+  '<div class="foot"><a href="#admin" id="admin-link">אזור מנהל</a></div>' +
+  '</div>';
+
+  el('f-name').value = state.name;
+  el('f-unit').value = state.unit;
+
+  function start(){
+    var n = el('f-name').value.trim();
+    var u = el('f-unit').value.trim();
+    var bad = false;
+    el('f-name').classList.toggle('invalid', !n); if (!n) bad = true;
+    el('f-unit').classList.toggle('invalid', !u); if (!u) bad = true;
+    el('f-err').classList.toggle('show', bad);
+    if (bad) return;
+    state.name = n; state.unit = u;
+    state.idx = 0;
+    state.answers = new Array(QUESTIONS.length).fill(null);
+    state.startedAt = new Date().toISOString();
+    state.screen = 'quiz';
+    render();
+  }
+  el('f-go').addEventListener('click', start);
+  ['f-name','f-unit'].forEach(function(id){
+    el(id).addEventListener('keydown', function(e){ if (e.key === 'Enter') start(); });
+    el(id).addEventListener('input', function(){
+      this.classList.remove('invalid');
+      el('f-err').classList.remove('show');
+    });
+  });
+}
+
+/* ===================== מסך השאלון ===================== */
+function renderQuiz(){
+  var i = state.idx;
+  var total = QUESTIONS.length;
+  var pct = Math.round(((i) / total) * 100);
+  var html = topbar('בית הספר להדרכה') +
+  '<div class="wrap"><div class="card">' +
+    '<div class="q-head">' +
+      '<div class="q-count">שאלה ' + (i+1) + ' מתוך ' + total + '</div>' +
+      '<div class="q-pct">' + pct + '% הושלמו</div>' +
+    '</div>' +
+    '<div class="bar"><span style="width:' + pct + '%"></span></div>' +
+    '<div class="q-text">' + esc(QUESTIONS[i]) + '</div>' +
+    '<div class="scale" id="scale">';
+  SCALE.forEach(function(o){
+    var sel = state.answers[i] === o.v;
+    html += '<label class="opt' + (sel ? ' sel' : '') + '" data-v="' + o.v + '">' +
+      '<span class="dot"></span>' +
+      '<span class="num">' + o.v + '</span>' +
+      '<span class="lbl">' + esc(o.l) + '</span>' +
+      '<input type="radio" name="q" value="' + o.v + '"' + (sel ? ' checked' : '') + '>' +
+    '</label>';
+  });
+  html += '</div>' +
+    '<div class="nav">' +
+      '<button class="btn btn-primary" id="q-next"' + (state.answers[i] ? '' : ' disabled') + '>' +
+        (i === total-1 ? 'סיום ושליחה' : 'הבא') +
+      '</button>' +
+      (i > 0 ? '<button class="btn btn-ghost" id="q-back">חזרה</button>' : '') +
+      '<span class="spacer"></span>' +
+      '<span class="hint">ניתן לבחור גם באמצעות המקשים 1–5</span>' +
+    '</div>' +
+  '</div></div>';
+  APP.innerHTML = html;
+
+  Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(node){
+    node.addEventListener('click', function(){
+      state.answers[i] = Number(node.getAttribute('data-v'));
+      Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(n){
+        n.classList.toggle('sel', n === node);
+      });
+      el('q-next').disabled = false;
+    });
+  });
+  if (el('q-back')) el('q-back').addEventListener('click', function(){
+    state.idx--; render();
+  });
+  function advance(){
+    if (!state.answers[i]) return;
+    if (i === total-1) { submit(); }
+    else { state.idx++; render(); }
+  }
+  el('q-next').addEventListener('click', advance);
+
+  /* בחירה מהירה באמצעות המקשים 1–5, מעבר ב-Enter, חזרה ב-Backspace */
+  function onKey(e){
+    if (state.screen !== 'quiz' || state.idx !== i) return;
+    if (e.key >= '1' && e.key <= '5'){
+      var node = document.querySelector('.opt[data-v="' + e.key + '"]');
+      if (node) node.click();
+      e.preventDefault();
+    } else if (e.key === 'Enter'){
+      advance(); e.preventDefault();
+    } else if (e.key === 'Backspace' && i > 0){
+      state.idx--; render(); e.preventDefault();
+    }
+  }
+  document.addEventListener('keydown', onKey);
+  quizKeyHandler = onKey;
+}
+var quizKeyHandler = null;
+
+/* ===================== שליחה ===================== */
+function submit(){
+  var rec = {
+    id: 'r' + Date.now() + '-' + Math.random().toString(36).slice(2,8),
+    name: state.name,
+    unit: state.unit,
+    startedAt: state.startedAt,
+    submittedAt: new Date().toISOString(),
+    answers: state.answers.slice()
+  };
+  rec.synced = false;
+  Store.add(rec);
+  sendToWebhook(rec);
+  /* שליחה לענן ברקע — המשיב אינו ממתין לה ואינו מושפע מתוצאתה */
+  Cloud.push(rec);
+  /* איפוס מלא — לא נשאר במסך שום נתון של המשיב */
+  state.name = ''; state.unit = '';
+  state.answers = new Array(QUESTIONS.length).fill(null);
+  state.idx = 0; state.startedAt = null;
+  state.screen = 'done';
+  render();
+}
+
+/* ===================== מסך סיום (ללא תוצאה) ===================== */
+function renderDone(){
+  APP.innerHTML = topbar('בית הספר להדרכה') +
+  '<div class="wrap"><div class="card done">' +
+    '<div class="ring"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></div>' +
+    '<h2>השאלון הושלם בהצלחה</h2>' +
+    '<p>תודה על מילוי השאלון.</p>' +
+    '<p class="note">הנתונים הועברו בהצלחה למערכת.</p>' +
+    '<div style="margin-top:28px"><button class="btn btn-ghost" id="again">מילוי שאלון עבור משיב/ה נוסף/ת</button></div>' +
+  '</div></div>';
+  el('again').addEventListener('click', function(){
+    state.screen = 'intro'; render();
+  });
+}
+
+/* ===================== כניסת מנהל ===================== */
+function renderLogin(){
+  var st = Cloud.store();
+  /* כאשר USE_FIREBASE_AUTH פעיל, הכניסה מתבצעת מול Firebase Authentication
+     ולא מול הסיסמה המקומית — כך אפשר להדק את חוקי האבטחה ב-Firestore. */
+  var byFirebase = !!(st && st.enabled && st.useAuth);
+
+  APP.innerHTML = topbar('אזור מנהל') +
+  '<div class="wrap"><div class="card login">' +
+    '<div class="eyebrow">אזור מנהל</div>' +
+    '<h2 class="title" style="margin-top:6px">כניסה מאובטחת</h2>' +
+    '<p class="lead">אזור זה מיועד לגורם המנהל בלבד ומציג את תשובות המשיבים ותוצאות הסיווג.</p>' +
+    (byFirebase ?
+      '<div class="field">' +
+        '<label for="p-mail">כתובת אימייל</label>' +
+        '<input id="p-mail" type="email" autocomplete="username" placeholder="admin@example.com">' +
+      '</div>' : '') +
+    '<div class="field">' +
+      '<label for="p">' + (byFirebase ? 'סיסמה' : 'סיסמת מנהל') + '</label>' +
+      '<input id="p" type="password" autocomplete="current-password" placeholder="הזינו סיסמה">' +
+    '</div>' +
+    '<div class="err" id="p-err">פרטי הכניסה שגויים. נסו שוב.</div>' +
+    '<div style="margin-top:24px;display:flex;gap:10px">' +
+      '<button class="btn btn-primary" id="p-go">כניסה</button>' +
+      '<button class="btn btn-quiet" id="p-back">חזרה לשאלון</button>' +
+    '</div>' +
+  '</div></div>';
+
+  function fail(msg){
+    var box = el('p-err');
+    if (msg) box.textContent = msg;
+    box.classList.add('show');
+    el('p').classList.add('invalid');
+  }
+  function ok(){ state.admin = true; state.screen = 'admin'; render(); }
+
+  function tryLogin(){
+    if (byFirebase){
+      var mail = el('p-mail').value.trim();
+      if (!mail) { fail('יש להזין כתובת אימייל.'); return; }
+      st.signIn(mail, el('p').value).then(ok)['catch'](function(){
+        fail('פרטי הכניסה שגויים. נסו שוב.');
+      });
+      return;
+    }
+    sha256(el('p').value).then(function(h){
+      if (h === CONFIG.adminHash) ok();
+      else fail('סיסמה שגויה. נסו שוב.');
+    });
+  }
+
+  el('p-go').addEventListener('click', tryLogin);
+  el('p').addEventListener('keydown', function(e){ if (e.key === 'Enter') tryLogin(); });
+  if (el('p-mail')) el('p-mail').addEventListener('keydown', function(e){ if (e.key === 'Enter') tryLogin(); });
+  el('p').addEventListener('input', function(){
+    this.classList.remove('invalid'); el('p-err').classList.remove('show');
+  });
+  el('p-back').addEventListener('click', function(){
+    location.hash = ''; state.screen = 'intro'; render();
+  });
+
+  /* מסך הכניסה מוצג מיד; אם ה-SDK עדיין נטען, מרעננים כשהוא מוכן
+     כדי להציג את שדה האימייל במידת הצורך. */
+  if (!st){
+    Cloud.ready().then(function(){
+      if (state.screen === 'login' && !state.admin) renderLogin();
+    });
+  }
+}
+
+/* ===================== טבלת המנהל ===================== */
+var adminFilters = { name:'', unit:'', result:'' };
+var adminSynced = false;   /* סנכרון אוטומטי אחד בכל כניסה לאזור המנהל */
+
+function tagClass(result){
+  return result === ROLE_KAHAD ? 'tag' : 'tag alt';
+}
+
+function enriched(){
+  return Store.all().map(function(r){
+    var s = scoreOf(r.answers);
+    return {
+      id:r.id, name:r.name, unit:r.unit,
+      submittedAt:r.submittedAt, answers:r.answers,
+      kahad:s.kahad, tzafa:s.tzafa, gap:s.gap,
+      result:s.result, confidence:s.confidence
+    };
+  }).sort(function(a,b){
+    return new Date(b.submittedAt) - new Date(a.submittedAt);
+  });
+}
+
+function filtered(){
+  var n = adminFilters.name.trim(), u = adminFilters.unit.trim(), rs = adminFilters.result;
+  return enriched().filter(function(r){
+    if (n && r.name.indexOf(n) === -1) return false;
+    if (u && r.unit.indexOf(u) === -1) return false;
+    if (rs && r.result !== rs) return false;
+    return true;
+  });
+}
+
+function renderAdmin(){
+  var rows = filtered();
+  var totalAll = Store.all().length;
+  var pendingCount = Store.pending().length;
+  var st = Cloud.status();
+  var html = topbar('אזור מנהל') +
+  '<div class="wrap wide">' +
+    '<div class="admin-bar">' +
+      '<div><h2>ניהול משיבים</h2>' +
+      '<div class="count-note">סה״כ ' + totalAll + ' משיבים במערכת' +
+        (Cloud.enabled() && pendingCount ? ' · ' + pendingCount + ' ממתינים לסנכרון' : '') + '</div>' +
+      '<div style="margin-top:10px"><span class="chip ' + st.state + '" id="a-status">' +
+        '<span class="led"></span>' + esc(st.text) + '</span></div></div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+        '<button class="btn btn-ghost btn-sm" id="a-sync">סנכרון עם הענן</button>' +
+        '<button class="btn btn-ghost btn-sm" id="a-csv">ייצוא ל־Excel / CSV</button>' +
+        '<button class="btn btn-ghost btn-sm" id="a-json">גיבוי JSON</button>' +
+        '<label class="btn btn-ghost btn-sm" style="cursor:pointer">ייבוא גיבוי' +
+          '<input type="file" id="a-import" accept=".json,application/json" style="display:none"></label>' +
+        '<button class="btn btn-quiet btn-sm" id="a-out">יציאה</button>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="toolbar">' +
+      '<div class="tool grow"><label for="s-name">חיפוש לפי שם</label>' +
+        '<input id="s-name" type="search" placeholder="שם מלא או חלק ממנו" value="' + esc(adminFilters.name) + '"></div>' +
+      '<div class="tool grow"><label for="s-unit">חיפוש לפי יחידה</label>' +
+        '<input id="s-unit" type="search" placeholder="שם היחידה" value="' + esc(adminFilters.unit) + '"></div>' +
+      '<div class="tool"><label for="s-res">סינון לפי תוצאה</label>' +
+        '<select id="s-res">' +
+          '<option value="">כל התוצאות</option>' +
+          '<option value="' + ROLE_KAHAD + '">' + ROLE_KAHAD + '</option>' +
+          '<option value="' + ROLE_TZAFA + '">' + ROLE_TZAFA + '</option>' +
+        '</select></div>' +
+      '<div class="tool"><label>&nbsp;</label>' +
+        '<button class="btn btn-quiet btn-sm" id="s-clear">ניקוי סינון</button></div>' +
+    '</div>' +
+
+    '<div class="tbl-wrap">';
+
+  if (!rows.length){
+    html += '<div class="empty">' + (totalAll ? 'לא נמצאו משיבים התואמים לסינון.' : 'טרם נקלטו משיבים במערכת.') + '</div>';
+  } else {
+    html += '<table><thead><tr>' +
+      '<th>שם מלא</th><th>יחידה</th><th>תאריך מילוי</th><th>תוצאה</th>' +
+      '<th>ציון קה״ד</th><th>ציון קצין צפה</th><th>פער</th><th>רמת ביטחון</th><th></th>' +
+    '</tr></thead><tbody>';
+    rows.forEach(function(r){
+      html += '<tr>' +
+        '<td>' + esc(r.name) + '</td>' +
+        '<td>' + esc(r.unit) + '</td>' +
+        '<td>' + fmtDate(r.submittedAt) + '</td>' +
+        '<td><span class="' + tagClass(r.result) + '">' + esc(r.result) + '</span></td>' +
+        '<td>' + r.kahad.toFixed(1) + '</td>' +
+        '<td>' + r.tzafa.toFixed(1) + '</td>' +
+        '<td>' + r.gap.toFixed(1) + '</td>' +
+        '<td>' + esc(r.confidence) + '</td>' +
+        '<td style="white-space:nowrap">' +
+          '<button class="btn btn-ghost btn-sm" data-view="' + r.id + '">פירוט</button> ' +
+          '<button class="btn btn-quiet btn-sm" data-del="' + r.id + '">מחיקה</button>' +
+        '</td>' +
+      '</tr>';
+    });
+    html += '</tbody></table>';
+  }
+  html += '</div>' +
+    '<div class="count-note">מוצגים ' + rows.length + ' מתוך ' + totalAll + ' משיבים</div>' +
+  '</div><div id="modal-host"></div>';
+
+  APP.innerHTML = html;
+  el('s-res').value = adminFilters.result;
+
+  el('s-name').addEventListener('input', function(){
+    adminFilters.name = this.value; var p = this.selectionStart; renderAdmin();
+    var f = el('s-name'); f.focus(); f.setSelectionRange(p,p);
+  });
+  el('s-unit').addEventListener('input', function(){
+    adminFilters.unit = this.value; var p = this.selectionStart; renderAdmin();
+    var f = el('s-unit'); f.focus(); f.setSelectionRange(p,p);
+  });
+  el('s-res').addEventListener('change', function(){ adminFilters.result = this.value; renderAdmin(); });
+  el('s-clear').addEventListener('click', function(){
+    adminFilters = {name:'',unit:'',result:''}; renderAdmin();
+  });
+  el('a-out').addEventListener('click', function(){
+    var st2 = Cloud.store();
+    if (st2 && st2.enabled && st2.useAuth) st2.signOut();
+    state.admin = false; adminSynced = false;
+    state.screen = 'intro'; location.hash = ''; render();
+  });
+
+  /* עדכון שבב מצב הענן וסנכרון ראשוני ברגע שה-SDK מוכן */
+  if (!adminSynced){
+    adminSynced = true;
+    Cloud.ready().then(function(){
+      return Cloud.enabled() ? Cloud.sync() : null;
+    }).then(function(){
+      if (state.screen === 'admin') renderAdmin();
+    });
+  } else if (st.state === 'checking'){
+    Cloud.ready().then(function(){
+      if (state.screen === 'admin') renderAdmin();
+    });
+  }
+  el('a-sync').addEventListener('click', function(){
+    var btn = this;
+    btn.disabled = true; btn.textContent = 'מסנכרן…';
+    Cloud.sync().then(function(r){
+      if (!Cloud.enabled()){
+        alert('הסנכרון אינו זמין: ' + Cloud.status().text);
+      } else {
+        alert('הסנכרון הושלם.\nהועלו לענן: ' + r.up + '\nהתקבלו מהענן: ' + r.down);
+      }
+      renderAdmin();
+    });
+  });
+  el('a-csv').addEventListener('click', exportCsv);
+  el('a-json').addEventListener('click', exportJson);
+  el('a-import').addEventListener('change', importJson);
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-view]'), function(b){
+    b.addEventListener('click', function(){ openDetail(b.getAttribute('data-view')); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-del]'), function(b){
+    b.addEventListener('click', function(){
+      var id = b.getAttribute('data-del');
+      if (confirm('למחוק את רשומת המשיב? הפעולה אינה הפיכה, והרשומה תימחק גם מהענן.')){
+        Store.remove(id);
+        Cloud.remove(id);
+        renderAdmin();
+      }
+    });
+  });
+}
+
+/* ---------- כרטיס משיב ---------- */
+function openDetail(id){
+  var r = enriched().filter(function(x){ return x.id === id; })[0];
+  if (!r) return;
+  var html = '<div class="overlay" id="ov"><div class="modal">' +
+    '<div class="modal-head">' +
+      '<div><h3>' + esc(r.name) + '</h3>' +
+        '<div class="meta">' + esc(r.unit) + ' · מילוי בתאריך ' + fmtDateTime(r.submittedAt) + '</div></div>' +
+      '<button class="x" id="ov-x" aria-label="סגירה">&times;</button>' +
+    '</div>' +
+    '<div class="modal-body">' +
+      '<div class="stats">' +
+        '<div class="stat"><div class="k">ציון קה״ד</div><div class="v">' + r.kahad.toFixed(1) + '</div></div>' +
+        '<div class="stat"><div class="k">ציון קצין צפה</div><div class="v">' + r.tzafa.toFixed(1) + '</div></div>' +
+        '<div class="stat"><div class="k">פער בין הציונים</div><div class="v">' + r.gap.toFixed(1) + '</div></div>' +
+        '<div class="stat"><div class="k">תוצאה סופית</div><div class="v small">' + esc(r.result) + '</div></div>' +
+        '<div class="stat"><div class="k">רמת ביטחון הסיווג</div><div class="v small">' + esc(r.confidence) + '</div></div>' +
+      '</div>' +
+      '<div class="sec-h">התשובות שנבחרו (' + QUESTIONS.length + ' שאלות)</div>' +
+      '<div class="ans-list">';
+  QUESTIONS.forEach(function(q, i){
+    var v = r.answers[i];
+    var lbl = (SCALE[v-1] ? SCALE[v-1].l : '—');
+    html += '<div class="ans"><span class="idx">' + (i+1) + '.</span>' +
+      '<span class="txt">' + esc(q) + '</span>' +
+      '<span class="val">' + v + ' · ' + esc(lbl) + '</span></div>';
+  });
+  html += '</div></div></div></div>';
+  el('modal-host').innerHTML = html;
+  el('ov-x').addEventListener('click', close);
+  el('ov').addEventListener('click', function(e){ if (e.target === el('ov')) close(); });
+  function close(){ el('modal-host').innerHTML = ''; }
+}
+
+/* ---------- ייצוא / ייבוא ---------- */
+function download(filename, content, mime){
+  var blob = new Blob(['﻿' + content], {type: mime + ';charset=utf-8'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+}
+function csvCell(v){
+  var s = String(v == null ? '' : v);
+  return '"' + s.replace(/"/g,'""') + '"';
+}
+function exportCsv(){
+  var rows = filtered();
+  var head = ['שם מלא','יחידה','תאריך מילוי','שעת מילוי','תוצאה','ציון קה״ד','ציון קצין צפה','פער','רמת ביטחון'];
+  QUESTIONS.forEach(function(q,i){ head.push('ש' + (i+1) + ' - ' + q); });
+  var lines = [head.map(csvCell).join(',')];
+  rows.forEach(function(r){
+    var d = new Date(r.submittedAt);
+    var line = [r.name, r.unit, fmtDate(r.submittedAt), pad(d.getHours())+':'+pad(d.getMinutes()),
+                r.result, r.kahad.toFixed(1), r.tzafa.toFixed(1), r.gap.toFixed(1), r.confidence];
+    r.answers.forEach(function(a){ line.push(a); });
+    lines.push(line.map(csvCell).join(','));
+  });
+  download('survey-results-' + new Date().toISOString().slice(0,10) + '.csv', lines.join('\r\n'), 'text/csv');
+}
+function exportJson(){
+  download('survey-backup-' + new Date().toISOString().slice(0,10) + '.json',
+           JSON.stringify(Store.all(), null, 2), 'application/json');
+}
+function importJson(e){
+  var file = e.target.files && e.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(){
+    try {
+      var incoming = JSON.parse(String(reader.result).replace(/^﻿/,''));
+      if (!Array.isArray(incoming)) throw new Error('bad');
+      var existing = Store.all();
+      var seen = {};
+      existing.forEach(function(r){ seen[r.id] = true; });
+      var added = 0;
+      incoming.forEach(function(r){
+        if (r && r.id && !seen[r.id] && Array.isArray(r.answers)){
+          existing.push(r); seen[r.id] = true; added++;
+        }
+      });
+      Store.save(existing);
+      alert('הייבוא הושלם. נוספו ' + added + ' רשומות חדשות.');
+      renderAdmin();
+    } catch(err){
+      alert('הקובץ אינו קובץ גיבוי תקין.');
+    }
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+/* ===================== ניתוב ותצוגה ===================== */
+function render(){
+  if (quizKeyHandler){ document.removeEventListener('keydown', quizKeyHandler); quizKeyHandler = null; }
+  if (state.screen === 'admin' && !state.admin) state.screen = 'login';
+  switch(state.screen){
+    case 'quiz':  renderQuiz();  break;
+    case 'done':  renderDone();  break;
+    case 'login': renderLogin(); break;
+    case 'admin': renderAdmin(); break;
+    default:      renderIntro();
+  }
+  window.scrollTo(0,0);
+}
+
+function routeFromHash(){
+  var isAdmin = location.hash === '#admin';
+  if (isAdmin){
+    state.screen = state.admin ? 'admin' : 'login';
+  } else if (state.screen === 'login' || state.screen === 'admin'){
+    state.admin = false;
+    adminSynced = false;
+    state.screen = 'intro';
+  }
+  render();
+}
+window.addEventListener('hashchange', routeFromHash);
+routeFromHash();
+</script>
+</body>
+</html>
